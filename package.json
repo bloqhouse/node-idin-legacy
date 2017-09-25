@@ -1,0 +1,25 @@
+{
+  "name": "node-idin",
+  "version": "0.0.1",
+  "description": "NodeJS Library for iDIN (https://www.idin.nl/)",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard",
+    "release": "standard-version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bloqhouse/node-idin.git"
+  },
+  "keywords": [],
+  "author": "Daijiro Wachi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bloqhouse/node-idin/issues"
+  },
+  "homepage": "https://github.com/bloqhouse/node-idin#readme",
+  "devDependencies": {
+    "standard": "^10.0.3",
+    "standard-version": "^4.2.0"
+  }
+}
