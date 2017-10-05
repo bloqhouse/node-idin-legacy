@@ -4,6 +4,7 @@
   "description": "NodeJS Library for iDIN (https://www.idin.nl/)",
   "main": "index.js",
   "scripts": {
+    "example": "ts-node examples/index.ts",
     "test": "standard",
     "release": "standard-version"
   },
