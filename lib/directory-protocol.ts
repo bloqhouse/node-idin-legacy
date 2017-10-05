@@ -17,8 +17,7 @@ export function formatDirectoryProtocolXML() {
     </DirectoryReq>
   `.replace(/ (?!xmlns|version|productID|encoding)|\n/g, '')
 
-  const entryPoint = '//*[local-name(.)=\'Merchant\']'
-  const entryPointTest = '/*'
+  const entryPoint = '/*'
   const transformers = ['http://www.w3.org/2000/09/xmldsig#enveloped-signature', 'http://www.w3.org/2001/10/xml-exc-c14n#']
   const xmlenc = 'http://www.w3.org/2001/04/xmlenc#sha256'
   const signatureAlgorithm = 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256'
@@ -35,7 +34,7 @@ export function formatDirectoryProtocolXML() {
     }
   } as any
 
-  sig.addReference(entryPointTest, transformers, xmlenc, void 0, void 0, void 0, true)
+  sig.addReference(entryPoint, transformers, xmlenc, void 0, void 0, void 0, true)
   sig.keyInfoProvider = new MyKeyInfo(PRIVATE_KEY)
   sig.signatureAlgorithm = signatureAlgorithm
   sig.signingKey = PRIVATE_KEY
