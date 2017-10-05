@@ -12,7 +12,12 @@
     "url": "git+https://github.com/bloqhouse/node-idin.git"
   },
   "keywords": [],
-  "author": "Daijiro Wachi",
+  "contributors": [{
+    "name": "Francesco Soncina",
+    "email": "greensoncio@gmail.com"
+  }, {
+    "name": "Daijiro Wachi"
+  }],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/bloqhouse/node-idin/issues"
