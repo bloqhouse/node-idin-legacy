@@ -21,14 +21,17 @@
   "devDependencies": {
     "@types/dotenv": "^4.0.1",
     "@types/node": "^8.0.31",
+    "@types/xmldom": "^0.1.29",
     "nsp": "^2.8.1",
     "standard": "^10.0.3",
     "standard-version": "^4.2.0",
+    "ts-node": "^3.3.0",
     "tslint": "^5.7.0",
     "typescript": "^2.5.3"
   },
   "dependencies": {
     "dotenv": "^4.0.0",
-    "xml-crypto": "^0.10.1"
+    "xml-crypto": "^0.10.1",
+    "xmldom": "^0.1.27"
   }
 }
