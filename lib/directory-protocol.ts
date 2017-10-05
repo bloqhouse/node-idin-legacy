@@ -1,32 +1,58 @@
-import { MERCHANT_ID } from './constants'
+import { SignedXml, xpath, FileKeyInfo, KeyInfoProvider } from 'xml-crypto'
+import { DOMParser } from 'xmldom'
+import { MERCHANT_ID, PRIVATE_KEY, KEYNAME } from './constants'
 
 export function formatDirectoryProtocolXML() {
-  return `<?xml version="1.0" encoding="UTF-8"?>
+  const sig = new SignedXml()
+  const xml = `
+    <?xml version="1.0" encoding="UTF-8"?>
     <DirectoryReq version="1.0.0" productID="NL:BVN:BankID:1.0" xmlns="
     http://www.betaalvereniging.nl/iDx/messages/Merchant-Acquirer/1.0.0"
     xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
       <createDateTimestamp>${new Date().toISOString()}</createDateTimestamp>
       <Merchant>
         <merchantID>${MERCHANT_ID}</merchantID>
+        <subID>0</subID>
       </Merchant>
-      <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
-        <SignedInfo>
-          <CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
-          <SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
-          <Reference URI="">
-            <Transforms>
-              <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
-              <Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
-            </Transforms>
-            <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
-            <DigestValue>VW+VjenRyZVFCNfBTeoxDflQ4yfR8KYFvwPVinVPqBs=</DigestValue>
-          </Reference>
-        </SignedInfo>
-        <SignatureValue>IELLwKSGFMk64US23YrpZ8//hJ8DeJEtYht5knlxJvBOr8dcI+aJTBq+YtyzP9ClcK62Obs5aynHBE/GPHZShuMw+8WHq4fCMInOwKURgwjDOz8UYaIMqG0Ojiz8dFYGn+dH2lL0QVss4jmIIAD8MCijb27oqij6PclXw9Y9veI=</SignatureValue>
-        <KeyInfo>
-          <KeyName>7D665C81ABBE1A7D0E525BFC171F04D276F07BF2</KeyName>
-        </KeyInfo>
-      </Signature>
     </DirectoryReq>
-  `
+  `.replace(/ (?!xmlns|version|productID|encoding)|\n/g, '')
+
+  const entryPoint = '//*[local-name(.)=\'Merchant\']'
+  const entryPointTest = '/*'
+  const transformers = ['http://www.w3.org/2000/09/xmldsig#enveloped-signature', 'http://www.w3.org/2001/10/xml-exc-c14n#']
+  const xmlenc = 'http://www.w3.org/2001/04/xmlenc#sha256'
+  const signatureAlgorithm = 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256'
+
+  const MyKeyInfo = function(this: any, key: string) {
+    this._key = key
+
+    this.getKeyInfo = function (key: any, prefix: string) {
+      return `<KeyName>${KEYNAME}</KeyName>`
+    }
+
+    this.getKey = function (keyInfo: any) {
+      return this._key
+    }
+  } as any
+
+  sig.addReference(entryPointTest, transformers, xmlenc, void 0, void 0, void 0, true)
+  sig.keyInfoProvider = new MyKeyInfo(PRIVATE_KEY)
+  sig.signatureAlgorithm = signatureAlgorithm
+  sig.signingKey = PRIVATE_KEY
+  sig.computeSignature(xml)
+  const res = sig.getSignedXml()
+  // verifyOwnSignature(res, xml)
+  return res
 }
+
+// export function verifyOwnSignature(res: any, xml: string) {
+//   var doc = new DOMParser().parseFromString(res)
+//   var signature = xpath(doc, "//*[local-name(.)='Signature' and namespace-uri(.)='http://www.w3.org/2000/09/xmldsig#']")[0]
+//   var sx = new SignedXml()
+//   sx.keyInfoProvider = new FileKeyInfo('cert.pem')
+//   sx.loadSignature(signature)
+//   var result = sx.checkSignature(xml)
+//   if (!result) {
+//     console.warn(result, sx.validationErrors)
+//   }
+// }
