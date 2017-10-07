@@ -13,12 +13,15 @@
     "url": "git+https://github.com/bloqhouse/node-idin.git"
   },
   "keywords": [],
-  "contributors": [{
-    "name": "Francesco Soncina",
-    "email": "greensoncio@gmail.com"
-  }, {
-    "name": "Daijiro Wachi"
-  }],
+  "contributors": [
+    {
+      "name": "Francesco Soncina",
+      "email": "greensoncio@gmail.com"
+    },
+    {
+      "name": "Daijiro Wachi"
+    }
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/bloqhouse/node-idin/issues"
@@ -27,6 +30,7 @@
   "devDependencies": {
     "@types/dotenv": "^4.0.1",
     "@types/node": "^8.0.31",
+    "@types/uuid": "^3.4.2",
     "@types/xmldom": "^0.1.29",
     "nsp": "^2.8.1",
     "standard": "^10.0.3",
@@ -37,6 +41,8 @@
   },
   "dependencies": {
     "dotenv": "^4.0.0",
+    "pretty-data": "^0.40.0",
+    "uuid": "^3.1.0",
     "xml-crypto": "^0.10.1",
     "xmldom": "^0.1.27"
   }
