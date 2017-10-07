@@ -5,5 +5,10 @@ import {
   formatTransactionProtocolXML,
 } from '../lib'
 
-console.log(formatDirectoryProtocolXML())
-console.log(formatTransactionProtocolXML())
+console.log(`
+DIRECTORY REQUEST
+${formatDirectoryProtocolXML()}
+
+TRANSACTION REQUEST
+${formatTransactionProtocolXML()}
+`)
