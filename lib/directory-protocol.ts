@@ -1,10 +1,11 @@
+import { pd } from 'pretty-data'
 import { SignedXml, xpath, FileKeyInfo, KeyInfoProvider } from 'xml-crypto'
 import { DOMParser } from 'xmldom'
-import { MERCHANT_ID, PRIVATE_KEY, KEYNAME } from './constants'
+import { MERCHANT_ID, MERCHANT_SUBID, PRIVATE_KEY, KEYNAME } from './constants'
 
 export function formatDirectoryProtocolXML() {
   const sig = new SignedXml()
-  const xml = `
+  const xml = pd.xmlmin(`
     <?xml version="1.0" encoding="UTF-8"?>
     <DirectoryReq version="1.0.0" productID="NL:BVN:BankID:1.0" xmlns="
     http://www.betaalvereniging.nl/iDx/messages/Merchant-Acquirer/1.0.0"
@@ -12,17 +13,17 @@ export function formatDirectoryProtocolXML() {
       <createDateTimestamp>${new Date().toISOString()}</createDateTimestamp>
       <Merchant>
         <merchantID>${MERCHANT_ID}</merchantID>
-        <subID>0</subID>
+        <subID>${MERCHANT_SUBID}</subID>
       </Merchant>
     </DirectoryReq>
-  `.replace(/ (?!xmlns|version|productID|encoding)|\n/g, '')
+  `)
 
   const entryPoint = '/*'
   const transformers = ['http://www.w3.org/2000/09/xmldsig#enveloped-signature', 'http://www.w3.org/2001/10/xml-exc-c14n#']
   const xmlenc = 'http://www.w3.org/2001/04/xmlenc#sha256'
   const signatureAlgorithm = 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256'
 
-  const MyKeyInfo = function(this: any, key: string) {
+  const MyKeyInfo = function (this: any, key: string) {
     this._key = key
 
     this.getKeyInfo = function (key: any, prefix: string) {

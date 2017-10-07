@@ -1,5 +1,14 @@
 /// <reference path="../untyped.d.ts" />
 
-import { formatDirectoryProtocolXML } from '../lib'
+import {
+  formatDirectoryProtocolXML,
+  formatTransactionProtocolXML,
+} from '../lib'
 
-console.log(formatDirectoryProtocolXML())
+console.log(`
+DIRECTORY REQUEST
+${formatDirectoryProtocolXML()}
+
+TRANSACTION REQUEST
+${formatTransactionProtocolXML()}
+`)
