@@ -2,7 +2,7 @@ import { FileKeyInfo, KeyInfoProvider, SignedXml, xpath } from 'xml-crypto'
 import { DOMParser } from 'xmldom'
 import { KEYNAME, PRIVATE_KEY } from './constants'
 
-export function signXML(xml: any) {
+export function signXML(xml: string, selfVerify: boolean = false) {
   const sig = new SignedXml()
   const entryPoint = '/*'
   const transformers = ['http://www.w3.org/2000/09/xmldsig#enveloped-signature', 'http://www.w3.org/2001/10/xml-exc-c14n#']
@@ -20,18 +20,19 @@ export function signXML(xml: any) {
   sig.signingKey = PRIVATE_KEY
   sig.computeSignature(xml)
   const res = sig.getSignedXml()
-  // verifyOwnSignature(res, xml)
+  selfVerify ? verifyOwnSignature(res, xml) : Function.prototype()
   return res
 }
 
-// export function verifyOwnSignature(res: any, xml: string) {
-//   var doc = new DOMParser().parseFromString(res)
-//   var signature = xpath(doc, "//*[local-name(.)='Signature' and namespace-uri(.)='http://www.w3.org/2000/09/xmldsig#']")[0]
-//   var sx = new SignedXml()
-//   sx.keyInfoProvider = new FileKeyInfo('cert.pem')
-//   sx.loadSignature(signature)
-//   var result = sx.checkSignature(xml)
-//   if (!result) {
-//     console.warn(result, sx.validationErrors)
-//   }
-// }
+export function verifyOwnSignature(res: string, xml: string) {
+  const doc = new DOMParser().parseFromString(res)
+  const signature = xpath(doc, '//*[local-name(.)=\'Signature\' and namespace-uri(.)=\'http://www.w3.org/2000/09/xmldsig#\']')[0]
+  const sx = new SignedXml()
+  sx.keyInfoProvider = new FileKeyInfo('cert.pem')
+  sx.loadSignature(signature)
+  const result = sx.checkSignature(xml)
+  /* istanbul ignore next */
+  if (!result) {
+    throw new Error(sx.validationErrors)
+  }
+}
