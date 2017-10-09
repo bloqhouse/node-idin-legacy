@@ -1,7 +1,7 @@
 import { pd } from 'pretty-data'
-import { SignedXml, xpath, FileKeyInfo, KeyInfoProvider } from 'xml-crypto'
+import { FileKeyInfo, KeyInfoProvider, SignedXml, xpath } from 'xml-crypto'
 import { DOMParser } from 'xmldom'
-import { MERCHANT_ID, MERCHANT_SUBID, PRIVATE_KEY, KEYNAME } from './constants'
+import { KEYNAME, MERCHANT_ID, MERCHANT_SUBID, PRIVATE_KEY } from './constants'
 
 export function formatStatusProtocolXML(transactionId: string) {
   const sig = new SignedXml()
@@ -28,14 +28,14 @@ export function formatStatusProtocolXML(transactionId: string) {
   const xmlenc = 'http://www.w3.org/2001/04/xmlenc#sha256'
   const signatureAlgorithm = 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256'
 
-  const MyKeyInfo = function (this: any, key: string) {
+  const MyKeyInfo = function(this: any, key: string) {
     this._key = key
 
-    this.getKeyInfo = function (key: any, prefix: string) {
+    this.getKeyInfo = (privateKey: any, prefix: string) => {
       return `<KeyName>${KEYNAME}</KeyName>`
     }
 
-    this.getKey = function (keyInfo: any) {
+    this.getKey = (keyInfo: any) => {
       return this._key
     }
   } as any
