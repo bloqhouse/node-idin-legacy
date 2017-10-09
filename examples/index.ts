@@ -19,7 +19,7 @@ DIRECTORY REQUEST
 ${formatDirectoryProtocolXML()}
 
 TRANSACTION REQUEST
-${formatTransactionProtocolXML('BANKNL2Y')}
+${formatTransactionProtocolXML('BANKNL2Y', 'TXTID')}
 
 STATUS REQUEST
 ${formatStatusProtocolXML(id)}
