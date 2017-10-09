@@ -15,9 +15,12 @@ import {
   ID_PREFIX,
 } from './constants'
 
-export function formatTransactionProtocolXML(issuerID: string = 'BANKNL2Y', requestedService = REQUESTED_SERVICE) {
+export function formatTransactionProtocolXML(
+  issuerID: string,
+  transactionID = uuid().replace(/-/g, ''),
+  requestedService = REQUESTED_SERVICE
+) {
   const sig = new SignedXml()
-  const id = uuid().replace(/-/g, '')
   const xml = pd.xmlmin(`
     <?xml version="1.0" encoding="UTF-8"?>
     <AcquirerTrxReq version="1.0.0"
@@ -36,13 +39,13 @@ export function formatTransactionProtocolXML(issuerID: string = 'BANKNL2Y', requ
       <Transaction>
         <expirationPeriod>${EXPIRATION_PERIOD}</expirationPeriod>
         <language>${DEFAULT_LANGUAGE}</language>
-        <entranceCode>${ID_PREFIX}${id}</entranceCode>
+        <entranceCode>${ID_PREFIX}${transactionID}</entranceCode>
         <container>
           <samlp:AuthnRequest
             xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"
             xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"
             AttributeConsumingServiceIndex="${requestedService}"
-            ID="${ID_PREFIX}${id}"
+            ID="${ID_PREFIX}${transactionID}"
             IssueInstant="${new Date().toISOString()}"
             Version="2.0"
             ProtocolBinding="nl:bvn:bankid:1.0:protocol:iDx"
