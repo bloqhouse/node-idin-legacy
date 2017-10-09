@@ -9,15 +9,11 @@ export function signXML(xml: any) {
   const xmlenc = 'http://www.w3.org/2001/04/xmlenc#sha256'
   const signatureAlgorithm = 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256'
   const MyKeyInfo = function(this: any, key: string) {
-    this._key = key
     this.getKeyInfo = (privateKey: any, prefix: string) => {
       return `<KeyName>${KEYNAME}</KeyName>`
     }
-
-    this.getKey = (keyInfo: any) => {
-      return this._key
-    }
   } as any
+
   sig.addReference(entryPoint, transformers, xmlenc, void 0, void 0, void 0, true)
   sig.keyInfoProvider = new MyKeyInfo(PRIVATE_KEY)
   sig.signatureAlgorithm = signatureAlgorithm
