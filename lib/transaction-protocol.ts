@@ -1,5 +1,4 @@
 import { pd } from 'pretty-data'
-import * as uuid from 'uuid/v1'
 import { signXML } from './idin-protocol'
 
 import {
@@ -17,7 +16,7 @@ import {
 
 export function formatTransactionProtocolXML(
   issuerID: string,
-  transactionID = uuid().replace(/-/g, ''),
+  transactionID: string,
   requestedService = REQUESTED_SERVICE,
 ) {
   const xml = pd.xmlmin(`

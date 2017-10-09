@@ -80,7 +80,8 @@
       "/coverage/",
       "/dist/",
       "/node_modules/",
-      "/app/"
+      "/app/",
+      "index.ts"
     ],
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx)$",
     "moduleFileExtensions": [
