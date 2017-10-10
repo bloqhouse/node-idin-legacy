@@ -61,6 +61,11 @@
     "xml-crypto": "^0.10.1",
     "xmldom": "^0.1.27"
   },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
   "pre-commit": [
     "lint",
     "validate",
