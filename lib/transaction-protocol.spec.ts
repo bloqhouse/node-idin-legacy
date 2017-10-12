@@ -1,4 +1,3 @@
-import './_mocks'
 import { formatTransactionProtocolXML } from './transaction-protocol'
 
 describe('format status protocol', () => {
