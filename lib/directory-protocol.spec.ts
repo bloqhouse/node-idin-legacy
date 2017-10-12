@@ -1,4 +1,3 @@
-import './_mocks'
 import { formatDirectoryProtocolXML } from './directory-protocol'
 
 describe('format directory protocol', () => {

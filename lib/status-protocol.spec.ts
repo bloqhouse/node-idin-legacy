@@ -1,4 +1,3 @@
-import './_mocks'
 import { formatStatusProtocolXML } from './status-protocol'
 
 describe('status protocol', () => {
