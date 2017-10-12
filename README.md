@@ -10,9 +10,9 @@ Node.js Library for [iDIN](https://www.idin.nl/)
 - MERCHANT\_SUBID - _can be 0_
 - MERCHANT\_RETURN\_URL - _callback url_
 - PRIVATE\_KEY - _private key string without whitespaces_
-- PRIVATE\_KEY\_FINGERPRINT - _sha1 hex encoded of the public key_
+- PUBLIC\_KEY\_FINGERPRINT - _sha1 hex encoded of the uploaded public key_
 - EXPIRATION\_PERIOD - _e.g. PT5M_
 - REQUESTED\_SERVICE - _e.g. 21968_
 - DEFAULT\_LANGUAGE - _e.g. en_
 - LOA - _can be loa2 or loa3_
-- ID\_PREFIX - _can be an empty string_
+- ID\_PREFIX - _e.g. ABC_
