@@ -1,11 +1,15 @@
 {
   "name": "node-idin",
-  "version": "0.9.0",
+  "version": "0.8.0",
   "description": "NodeJS Library for iDIN (https://www.idin.nl/)",
   "main": "dist/index.js",
+  "engines" : {
+    "node" : ">=6"
+  },
   "scripts": {
     "commit": "git-cz",
-    "prepublishOnly": "tsc -p .",
+    "build": "rimraf dist && tsc -p .",
+    "prepublishOnly": "rimraf dist && tsc -p .",
     "pretest": "rimraf dist && tsc -p .",
     "test": "NODE_ENV=test jest --coverage",
     "test:ci": "npm run pretest && NODE_ENV=test jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
@@ -15,8 +19,7 @@
     "lint:fix": "tslint --fix -p .",
     "release": "standard-version",
     "validate": "npm ls",
-    "preversion": "npm test",
-    "version": "npm run build && git add -A"
+    "preversion": "npm test && npm run build"
   },
   "repository": {
     "type": "git",
