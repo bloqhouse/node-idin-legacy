@@ -1,8 +1,8 @@
 {
   "name": "node-idin",
-  "version": "0.0.1",
+  "version": "0.9.0",
   "description": "NodeJS Library for iDIN (https://www.idin.nl/)",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "commit": "git-cz",
     "prepublishOnly": "tsc -p .",
@@ -14,7 +14,9 @@
     "example": "ts-node examples/index.ts",
     "lint:fix": "tslint --fix -p .",
     "release": "standard-version",
-    "validate": "npm ls"
+    "validate": "npm ls",
+    "preversion": "npm test",
+    "version": "npm run build && git add -A"
   },
   "repository": {
     "type": "git",
@@ -44,6 +46,7 @@
     "@types/xmldom": "^0.1.29",
     "await-to-ts": "^1.0.6",
     "commitizen": "^2.9.6",
+    "coveralls": "^3.0.0",
     "cz-conventional-changelog": "^2.0.0",
     "jest": "^21.2.1",
     "nsp": "^2.8.1",

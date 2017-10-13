@@ -1,6 +1,6 @@
 import { FileKeyInfo, KeyInfoProvider, SignedXml, xpath } from 'xml-crypto'
 import { DOMParser } from 'xmldom'
-import { KEYNAME, PRIVATE_KEY } from './constants'
+import { PRIVATE_KEY, PUBLIC_KEY_FINGERPRINT } from './constants'
 
 export function signXML(xml: string, selfVerify: boolean = false) {
   const sig = new SignedXml()
@@ -10,7 +10,7 @@ export function signXML(xml: string, selfVerify: boolean = false) {
   const signatureAlgorithm = 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256'
   const MyKeyInfo = function(this: any, key: string) {
     this.getKeyInfo = (privateKey: any, prefix: string) => {
-      return `<KeyName>${KEYNAME}</KeyName>`
+      return `<KeyName>${PUBLIC_KEY_FINGERPRINT}</KeyName>`
     }
   } as any
 

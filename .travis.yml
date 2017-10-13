@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+- '6'
+- '7'
+- '8'
+script:
+- npm run test:ci
+before_install:
+- openssl aes-256-cbc -K $encrypted_a305f5918f76_key -iv $encrypted_a305f5918f76_iv
+  -in .env.enc -out .env -d
