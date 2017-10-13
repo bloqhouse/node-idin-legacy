@@ -1,10 +1,10 @@
 {
   "name": "node-idin",
-  "version": "0.8.0",
+  "version": "0.9.0-0",
   "description": "NodeJS Library for iDIN (https://www.idin.nl/)",
   "main": "dist/index.js",
-  "engines" : {
-    "node" : ">=6"
+  "engines": {
+    "node": ">=6"
   },
   "scripts": {
     "commit": "git-cz",
