@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`idin response should fail if not ROUNTING_ENDPOINT 1`] = `
+Object {
+  "Acquirer": Object {
+    "acquirerID": "0030",
+  },
+  "Directory": Object {
+    "Country": Object {
+      "Issuer": Array [
+        Object {
+          "issuerID": "BANKNL2U",
+          "issuerName": "eTT ValidationService",
+        },
+        Object {
+          "issuerID": "HKVSNL2A",
+          "issuerName": "HKSVNL2A",
+        },
+        Object {
+          "issuerID": "BANKNL2Y",
+          "issuerName": "WL Issuer SIM iDIN ABN INT",
+        },
+      ],
+      "countryNames": "Nederland",
+    },
+    "directoryDateTimestamp": "2016-10-12T06:37:46.000Z",
+  },
+  "createDateTimestamp": "2017-10-14T23:36:15.018Z",
+}
+`;
