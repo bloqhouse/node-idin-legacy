@@ -64,7 +64,7 @@ describe('idin request', () => {
 })
 
 describe('idin response', () => {
-  it('should fail if not ROUNTING_ENDPOINT', async () => {
+  it('should correctly parse the directory response', async () => {
     (fetch as any).mockResponseOnce(mockedBody)
     const [err, res] = await to(getDirectoryResponse())
     expect(err).toBeFalsy()

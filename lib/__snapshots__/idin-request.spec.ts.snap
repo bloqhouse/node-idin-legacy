@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`idin response should fail if not ROUNTING_ENDPOINT 1`] = `
+exports[`idin response should correctly parse the directory response 1`] = `
 Object {
   "Acquirer": Object {
     "acquirerID": "0030",
