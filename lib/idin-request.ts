@@ -76,6 +76,26 @@ export function fetchTransactionResponse(issuerID: string, transactionID: string
   return fetchResponse(payload)
 }
 
+export async function getTransactionResponse() {
+  const payload = formatDirectoryProtocolXML()
+  const [err, res] = await to(fetchDirectoryResponse())
+  ifError(err)
+  const parsed = JSON.parse(xml2json(res, { compact: true }) as any)
+  return {
+    createDateTimestamp: parsed['ns3:AcquirerTrxRes']['ns3:createDateTimestamp']._text,
+    Acquirer: {
+      acquirerID: parsed['ns3:AcquirerTrxRes']['ns3:Acquirer']['ns3:acquirerID']._text,
+    },
+    Issuer: {
+      issuerAuthenticationURL: parsed['ns3:AcquirerTrxRes']['ns3:Issuer']['ns3:issuerAuthenticationURL']._text,
+    },
+    Transaction: {
+      transactionID: parsed['ns3:AcquirerTrxRes']['ns3:Transaction']['ns3:transactionID']._text,
+      transactionCreateDateTimestamp: parsed['ns3:AcquirerTrxRes']['ns3:Transaction']['ns3:transactionCreateDateTimestamp']._text,
+    },
+  }
+}
+
 export function fetchStatusResponse(transactionID: string) {
   const payload = formatStatusProtocolXML(transactionID)
   return fetchResponse(payload)

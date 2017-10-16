@@ -28,3 +28,19 @@ Object {
   "createDateTimestamp": "2017-10-14T23:36:15.018Z",
 }
 `;
+
+exports[`idin response should correctly parse the transaction response 1`] = `
+Object {
+  "Acquirer": Object {
+    "acquirerID": "0030",
+  },
+  "Issuer": Object {
+    "issuerAuthenticationURL": "https://abnamro-test.bank-request.com/bvn-idx-bankid-rs/consumerAuthenticationSim?hash=IQJYieK%2BLFHDBQD3%2BPx6BdLhDwRk09bD9Cg3PuUwNIE%3D",
+  },
+  "Transaction": Object {
+    "transactionCreateDateTimestamp": "2017-10-16T09:53:03.580Z",
+    "transactionID": "0030000020078939",
+  },
+  "createDateTimestamp": "2017-10-16T09:53:03.580Z",
+}
+`;
