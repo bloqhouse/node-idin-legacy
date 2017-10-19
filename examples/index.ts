@@ -54,4 +54,4 @@ async function main() {
   console.log('status response', statusResponse)
 }
 
-main()
+main().catch(ifError)
