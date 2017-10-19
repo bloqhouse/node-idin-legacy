@@ -131,7 +131,7 @@ export async function getStatusResponse(transactionID: string) {
         StatusCode: parsed['awidxma:AcquirerStatusRes']['awidxma:Transaction']['awidxma:container']['saml2p:Response']['saml2p:Status']['saml2p:StatusCode']._attributes.Value.split('status:')[1],
         IssuerID: parsed['awidxma:AcquirerStatusRes']['awidxma:Transaction']['awidxma:container']['saml2p:Response']['saml2:Assertion']['saml2:Issuer']._text,
         Attributes: Object.assign({}, ...attributes.map((a) => JSON.parse(xml2json(a, { compact: true }) as any)).map((a) => ({
-          [ (a['saml2:NameID'] && 'NameID') || a['saml2:Attribute']._attributes.Name.split('consumer.')[1]]:
+          [(a['saml2:NameID'] && 'NameID') || a['saml2:Attribute']._attributes.Name.split('consumer.')[1]]:
             (a['saml2:NameID'] && a['saml2:NameID']._text) || a['saml2:Attribute']['saml2:AttributeValue']._text,
         }))),
       },
