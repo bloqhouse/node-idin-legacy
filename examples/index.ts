@@ -6,15 +6,15 @@ import to from 'await-to-ts'
 import * as uuid from 'uuid/v1'
 
 import {
-  fetchStatusResponse,
   formatDirectoryProtocolXML,
   formatStatusProtocolXML,
   formatTransactionProtocolXML,
   getDirectoryResponse,
+  getStatusResponse,
   getTransactionResponse,
 } from '../lib'
 
-const isserID = 'BANKNL2Y'
+const issuerID = 'BANKNL2Y'
 const acquirerID = '0030'
 const _ID = '000000000001'
 const transactionID = '0030000020088521'
@@ -40,7 +40,7 @@ async function main() {
   ifError(err0)
   // tslint:disable-next-line:no-console
   console.log('Issuers', directoryResponse.Directory.Country.countryNames, directoryResponse.Directory.Country.Issuer)
-  const [err1, transactionResponse] = await to(getTransactionResponse(isserID, transactionID))
+  const [err1, transactionResponse] = await to(getTransactionResponse(issuerID, transactionID))
   ifError(err1)
   // tslint:disable-next-line:no-console
   console.log(`
@@ -48,10 +48,10 @@ async function main() {
   IssuerAuthenticationURL: ${transactionResponse.Issuer.issuerAuthenticationURL}
   `)
 
-  const [err2, statusResponse] = await to(fetchStatusResponse(transactionResponse.Transaction.transactionID))
+  const [err2, statusResponse] = await to(getStatusResponse(transactionResponse.Transaction.transactionID))
   ifError(err2)
   // tslint:disable-next-line:no-console
-  console.log('status xml response', statusResponse)
+  console.log('status response', statusResponse)
 }
 
 main()

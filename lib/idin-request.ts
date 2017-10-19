@@ -1,14 +1,22 @@
 import { ifError } from 'assert'
 import to from 'await-to-ts'
+import * as promisify from 'es6-promisify'
 import 'isomorphic-fetch'
+import { decrypt } from 'xml-encryption'
 import { xml2json } from 'xml-js'
-import { ROUTING_ENDPOINT } from './constants'
+import { DOMParser } from 'xmldom'
+import { select } from 'xpath'
+import { PRIVATE_KEY as key, ROUTING_ENDPOINT } from './constants'
 import { formatDirectoryProtocolXML } from './directory-protocol'
 import { formatStatusProtocolXML } from './status-protocol'
 import { formatTransactionProtocolXML } from './transaction-protocol'
 
 const DEFAULT_FETCH_CONFIG = {
   method: 'POST',
+}
+
+const DECRYPT_OPTIONS = {
+  key,
 }
 
 export function fetchResponse(payload?: string, routingService = ROUTING_ENDPOINT) {
@@ -98,4 +106,35 @@ export async function getTransactionResponse(issuerID: string, transactionID: st
 export function fetchStatusResponse(transactionID: string) {
   const payload = formatStatusProtocolXML(transactionID)
   return fetchResponse(payload)
+}
+
+export async function getStatusResponse(transactionID: string) {
+  const xpathQuery = '//*[local-name(.)=\'EncryptedData\']'
+  const [err, statusResponse] = await to(fetchStatusResponse(transactionID))
+  ifError(err)
+  const xpathRes = select(xpathQuery, new DOMParser().parseFromString(statusResponse))
+  const promises = xpathRes.map((res) => promisify(decrypt)(res.toString(), DECRYPT_OPTIONS))
+  const [err1, attributes] = await to(Promise.all(promises))
+  const parsed = JSON.parse(xml2json(statusResponse, { compact: true }) as any)
+  return {
+    createDateTimestamp: parsed['awidxma:AcquirerStatusRes']['awidxma:createDateTimestamp']._text,
+    Acquirer: {
+      acquirerID: parsed['awidxma:AcquirerStatusRes']['awidxma:Acquirer']['awidxma:acquirerID']._text,
+    },
+    Transaction: {
+      transactionID: parsed['awidxma:AcquirerStatusRes']['awidxma:Transaction']['awidxma:transactionID']._text,
+      status: parsed['awidxma:AcquirerStatusRes']['awidxma:Transaction']['awidxma:status']._text,
+      statusDateTimestamp: parsed['awidxma:AcquirerStatusRes']['awidxma:Transaction']['awidxma:statusDateTimestamp']._text,
+      Response: {
+        TransactionID: parsed['awidxma:AcquirerStatusRes']['awidxma:Transaction']['awidxma:container']['saml2p:Response']._attributes.ID,
+        EntranceCode: parsed['awidxma:AcquirerStatusRes']['awidxma:Transaction']['awidxma:container']['saml2p:Response']._attributes.InResponseTo._text,
+        StatusCode: parsed['awidxma:AcquirerStatusRes']['awidxma:Transaction']['awidxma:container']['saml2p:Response']['saml2p:Status']['saml2p:StatusCode']._attributes.Value.split('status:')[1],
+        IssuerID: parsed['awidxma:AcquirerStatusRes']['awidxma:Transaction']['awidxma:container']['saml2p:Response']['saml2:Assertion']['saml2:Issuer']._text,
+        Attributes: Object.assign({}, ...attributes.map((a) => JSON.parse(xml2json(a, { compact: true }) as any)).map((a) => ({
+          [ (a['saml2:NameID'] && 'NameID') || a['saml2:Attribute']._attributes.Name.split('consumer.')[1]]:
+            (a['saml2:NameID'] && a['saml2:NameID']._text) || a['saml2:Attribute']['saml2:AttributeValue']._text,
+        }))),
+      },
+    },
+  }
 }
