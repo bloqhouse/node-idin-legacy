@@ -76,9 +76,8 @@ export function fetchTransactionResponse(issuerID: string, transactionID: string
   return fetchResponse(payload)
 }
 
-export async function getTransactionResponse() {
-  const payload = formatDirectoryProtocolXML()
-  const [err, res] = await to(fetchDirectoryResponse())
+export async function getTransactionResponse(issuerID: string, transactionID: string, requestedService?: string) {
+  const [err, res] = await to(fetchTransactionResponse(issuerID, transactionID, requestedService))
   ifError(err)
   const parsed = JSON.parse(xml2json(res, { compact: true }) as any)
   return {

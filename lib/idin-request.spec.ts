@@ -130,7 +130,7 @@ describe('idin response', () => {
 
   it('should correctly parse the transaction response', async () => {
     (fetch as any).mockResponseOnce(transactionResponseXML)
-    const [err, res] = await to(getTransactionResponse())
+    const [err, res] = await to(getTransactionResponse('XXX', 'TXTID'))
     expect(err).toBeFalsy()
     expect(res).toMatchSnapshot()
   })
