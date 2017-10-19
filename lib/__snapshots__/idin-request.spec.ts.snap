@@ -1,5 +1,42 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`idin response should correctly parse and decrypt the status response 1`] = `
+Object {
+  "Acquirer": Object {
+    "acquirerID": "0030",
+  },
+  "Transaction": Object {
+    "Response": Object {
+      "Attributes": Object {
+        "NameID": "FANTASYBANK1234567890",
+        "city": "Aachen",
+        "country": "DE",
+        "dateofbirth": "19750725",
+        "gender": "1",
+        "houseno": "19",
+        "initials": "VJ",
+        "legallastname": "Vries",
+        "legallastnameprefix": "de",
+        "partnerlastname": "Jansen",
+        "partnerlastnameprefix": "de",
+        "postalcode": "0000AA",
+        "preferredlastname": "Vries-Jansen",
+        "preferredlastnameprefix": "de",
+        "street": "Pascalstreet",
+      },
+      "EntranceCode": undefined,
+      "IssuerID": "BANKNL2Y",
+      "StatusCode": "Success",
+      "TransactionID": "RES-0030000020088521",
+    },
+    "status": "Success",
+    "statusDateTimestamp": "2017-10-19T09:16:24.226Z",
+    "transactionID": "0030000020088521",
+  },
+  "createDateTimestamp": "2017-10-19T09:16:24.451Z",
+}
+`;
+
 exports[`idin response should correctly parse the directory response 1`] = `
 Object {
   "Acquirer": Object {
