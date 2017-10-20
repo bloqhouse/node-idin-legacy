@@ -127,7 +127,7 @@ export async function getStatusResponse(transactionID: string) {
       statusDateTimestamp: parsed['awidxma:AcquirerStatusRes']['awidxma:Transaction']['awidxma:statusDateTimestamp']._text,
       Response: {
         TransactionID: parsed['awidxma:AcquirerStatusRes']['awidxma:Transaction']['awidxma:container']['saml2p:Response']._attributes.ID,
-        EntranceCode: parsed['awidxma:AcquirerStatusRes']['awidxma:Transaction']['awidxma:container']['saml2p:Response']._attributes.InResponseTo._text,
+        EntranceCode: parsed['awidxma:AcquirerStatusRes']['awidxma:Transaction']['awidxma:container']['saml2p:Response']._attributes.InResponseTo,
         StatusCode: parsed['awidxma:AcquirerStatusRes']['awidxma:Transaction']['awidxma:container']['saml2p:Response']['saml2p:Status']['saml2p:StatusCode']._attributes.Value.split('status:')[1],
         IssuerID: parsed['awidxma:AcquirerStatusRes']['awidxma:Transaction']['awidxma:container']['saml2p:Response']['saml2:Assertion']['saml2:Issuer']._text,
         Attributes: Object.assign({}, ...attributes.map((a) => JSON.parse(xml2json(a, { compact: true }) as any)).map((a) => ({

@@ -24,7 +24,7 @@ Object {
         "preferredlastnameprefix": "de",
         "street": "Pascalstreet",
       },
-      "EntranceCode": undefined,
+      "EntranceCode": "BLQ0030000000000001",
       "IssuerID": "BANKNL2Y",
       "StatusCode": "Success",
       "TransactionID": "RES-0030000020088521",
