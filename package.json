@@ -1,6 +1,6 @@
 {
   "name": "node-idin",
-  "version": "0.9.0-0",
+  "version": "0.10.0",
   "description": "NodeJS Library for iDIN (https://www.idin.nl/)",
   "main": "dist/index.js",
   "engines": {
@@ -45,7 +45,7 @@
     "@types/dotenv": "^4.0.1",
     "@types/es6-promisify": "^5.0.0",
     "@types/jest": "^21.1.2",
-    "@types/node": "^8.0.31",
+    "@types/node": "^8.0.46",
     "@types/uuid": "^3.4.2",
     "@types/xml2js": "^0.4.0",
     "@types/xmldom": "^0.1.29",
@@ -68,6 +68,7 @@
     "assert": "^1.4.1",
     "dotenv": "^4.0.0",
     "es6-promisify": "^5.0.0",
+    "idx": "^2.1.0",
     "isomorphic-fetch": "^2.2.1",
     "jest-fetch-mock": "^1.2.1",
     "key-fingerprint": "^1.0.3",
