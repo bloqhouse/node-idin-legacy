@@ -49,7 +49,6 @@
     "@types/uuid": "^3.4.2",
     "@types/xml2js": "^0.4.0",
     "@types/xmldom": "^0.1.29",
-    "await-to-ts": "^1.0.6",
     "commitizen": "^2.9.6",
     "coveralls": "^3.0.0",
     "cz-conventional-changelog": "^2.0.0",
@@ -66,6 +65,7 @@
   "dependencies": {
     "@types/isomorphic-fetch": "^0.0.34",
     "assert": "^1.4.1",
+    "await-to-ts": "^1.0.6",
     "dotenv": "^4.0.0",
     "es6-promisify": "^5.0.0",
     "idx": "^2.1.0",
