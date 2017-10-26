@@ -1,3 +1,4 @@
+import { readFileSync } from 'fs'
 import { FileKeyInfo, KeyInfoProvider, SignedXml, xpath } from 'xml-crypto'
 import { DOMParser } from 'xmldom'
 import { PRIVATE_KEY, PUBLIC_KEY_FINGERPRINT } from './constants'
@@ -12,6 +13,10 @@ export function signXML(xml: string, selfVerify: boolean = false) {
     this.getKeyInfo = (privateKey: any, prefix: string) => {
       return `<KeyName>${PUBLIC_KEY_FINGERPRINT}</KeyName>`
     }
+
+    // this.getKey = (keyInfo: any) => {
+	  //   return readFileSync('cert.pem')
+	  // }
   } as any
 
   sig.addReference(entryPoint, transformers, xmlenc, void 0, void 0, void 0, true)

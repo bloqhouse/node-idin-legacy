@@ -24,16 +24,16 @@ Object {
         "preferredlastnameprefix": "de",
         "street": "Pascalstreet",
       },
-      "EntranceCode": "BLQ0030000000000001",
+      "EntranceCode": "BLQsuccesHIO100OIHtest",
       "IssuerID": "BANKNL2Y",
       "StatusCode": "Success",
-      "TransactionID": "RES-0030000020088521",
+      "TransactionID": "RES-0030000020097259",
     },
     "status": "Success",
-    "statusDateTimestamp": "2017-10-19T09:16:24.226Z",
-    "transactionID": "0030000020088521",
+    "statusDateTimestamp": "2017-10-26T17:17:58.090Z",
+    "transactionID": "0030000020097259",
   },
-  "createDateTimestamp": "2017-10-19T09:16:24.451Z",
+  "createDateTimestamp": "2017-10-26T17:17:58.244Z",
 }
 `;
 
@@ -62,7 +62,7 @@ Object {
     },
     "directoryDateTimestamp": "2016-10-12T06:37:46.000Z",
   },
-  "createDateTimestamp": "2017-10-14T23:36:15.018Z",
+  "createDateTimestamp": "2017-10-25T11:54:15.603Z",
 }
 `;
 
@@ -72,12 +72,12 @@ Object {
     "acquirerID": "0030",
   },
   "Issuer": Object {
-    "issuerAuthenticationURL": "https://abnamro-test.bank-request.com/bvn-idx-bankid-rs/consumerAuthenticationSim?hash=IQJYieK%2BLFHDBQD3%2BPx6BdLhDwRk09bD9Cg3PuUwNIE%3D",
+    "issuerAuthenticationURL": "https://abnamro-test.bank-request.com/bvn-idx-bankid-rs/consumerAuthenticationSim?hash=%2FZ0i5s5diBp8HS3Lwq72I6ns4TVSnxfzLzfZrEXoMCw%3D",
   },
   "Transaction": Object {
-    "transactionCreateDateTimestamp": "2017-10-16T09:53:03.580Z",
-    "transactionID": "0030000020078939",
+    "transactionCreateDateTimestamp": "2017-10-25T12:03:58.983Z",
+    "transactionID": "0030000020094512",
   },
-  "createDateTimestamp": "2017-10-16T09:53:03.580Z",
+  "createDateTimestamp": "2017-10-25T12:03:58.983Z",
 }
 `;
