@@ -16,33 +16,39 @@ import {
 
 const issuerID = 'BANKNL2Y'
 const acquirerID = '0030'
-const _ID = '000000000001'
-const transactionID = '0030000020088521'
-const merchantReference = `${acquirerID}${_ID}` // uuid().replace(/-/g, '')
+// const _ID = '000000000001'
+// const transactionID = '0030000020088521'
+// const merchantReference = `${acquirerID}${_ID}` // uuid().replace(/-/g, '')
+const TEST_ENTRANCE_CODES =  {
+  success: `succesHIO100OIHtest`,
+  cancelled: `cancelledHIO200OIHtest`,
+  expiredEntranceCode: `expiredHIO300OIHtest`,
+  openEntranceCode: `openHIO400OIHtest`,
+  failureEntranceCode: `failureHIO500OIHtest`,
+}
 
-// tslint:disable-next-line:no-console
-console.log(`
-MerchantReference #${merchantReference}
-TxID #${transactionID}
+async function executeFlow(entranceCode: string) {
+    // tslint:disable-next-line:no-console
+  console.log(`
+  executeFlow - entranceCode #${entranceCode}
 
-DIRECTORY REQUEST
-${formatDirectoryProtocolXML()}
+  DIRECTORY REQUEST
+  ${formatDirectoryProtocolXML()}
 
-TRANSACTION REQUEST
-${formatTransactionProtocolXML('BANKNL2Y', merchantReference)}
+  TRANSACTION REQUEST
+  ${formatTransactionProtocolXML(issuerID, entranceCode)}
 
-STATUS REQUEST
-${formatStatusProtocolXML(transactionID)}
-`)
+  STATUS REQUEST
+  ${formatStatusProtocolXML(entranceCode)}
+  `)
 
-async function main() {
   const [err0, directoryResponse] = await to(getDirectoryResponse())
   ifError(err0)
-  // tslint:disable-next-line:no-console
+  // tslint:disable:no-console
   console.log('Issuers', directoryResponse.Directory.Country.countryNames, directoryResponse.Directory.Country.Issuer)
-  const [err1, transactionResponse] = await to(getTransactionResponse(issuerID, transactionID))
+  const [err1, transactionResponse] = await to(getTransactionResponse(issuerID, entranceCode))
   ifError(err1)
-  // tslint:disable-next-line:no-console
+  console.log('transaction response', transactionResponse)
   console.log(`
   TransactionID: ${transactionResponse.Transaction.transactionID}
   IssuerAuthenticationURL: ${transactionResponse.Issuer.issuerAuthenticationURL}
@@ -50,8 +56,15 @@ async function main() {
 
   const [err2, statusResponse] = await to(getStatusResponse(transactionResponse.Transaction.transactionID))
   ifError(err2)
-  // tslint:disable-next-line:no-console
   console.log('status response', statusResponse)
+  process.exit(0)
 }
 
-main().catch(ifError)
+async function main() {
+  for (const entranceCode of Object.values(TEST_ENTRANCE_CODES)) {
+    const [err, res] = await to(executeFlow(entranceCode))
+    ifError(err)
+  }
+}
+
+main().catch(console.error)
