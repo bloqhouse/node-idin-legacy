@@ -1,6 +1,6 @@
 {
   "name": "node-idin",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "description": "NodeJS Library for iDIN (https://www.idin.nl/)",
   "main": "dist/index.js",
   "engines": {
