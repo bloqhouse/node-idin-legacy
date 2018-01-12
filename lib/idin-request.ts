@@ -96,6 +96,7 @@ export async function getDirectoryResponse() {
   const [err, res] = await to(fetchDirectoryResponse())
   ifError(err)
   const parsed = JSON.parse(xml2json(res, { compact: true }) as any)
+  console.log('diocane', res)
   return {
     createDateTimestamp: parsed['ns3:DirectoryRes']['ns3:createDateTimestamp']._text,
     Acquirer: {
@@ -125,13 +126,14 @@ interface IIssuer {
   issuerName: string
 }
 
-function _parseIssuers(issuers: IXMLIssuer[]): IIssuer[] {
-  return issuers.map((issuer) => {
+function _parseIssuers(issuers: IXMLIssuer | IXMLIssuer[]): IIssuer[] {
+  const parse = (issuer: IXMLIssuer) => {
     return {
       issuerID: issuer['ns3:issuerID']._text,
       issuerName: issuer['ns3:issuerName']._text,
     }
-  })
+  }
+  return Array.isArray(issuers) ? issuers.map(parse) : [parse(issuers)]
 }
 
 export function fetchTransactionResponse(issuerID: string, transactionID: string, requestedService?: string) {
@@ -170,6 +172,7 @@ export async function getStatusResponse(transactionID: string) {
   const xpathRes = xpath(new DOMParser().parseFromString(statusResponse), xpathQuery)
   const promises = xpathRes.map((res: any) => promisify(decrypt)(res.toString(), DECRYPT_OPTIONS))
   const [err1, attributes] = await to(Promise.all(promises))
+  ifError(err1)
   const parsed = JSON.parse(xml2json(statusResponse, { compact: true }) as any)
   return {
     createDateTimestamp: parsed['awidxma:AcquirerStatusRes']['awidxma:createDateTimestamp']._text,
