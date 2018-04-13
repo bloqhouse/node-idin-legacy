@@ -1,6 +1,6 @@
 import { ifError } from 'assert'
 import to from 'await-to-ts'
-import * as promisify from 'es6-promisify'
+import { promisify } from 'es6-promisify'
 import idx from 'idx'
 import 'isomorphic-fetch'
 import { pd } from 'pretty-data'
@@ -170,7 +170,7 @@ export async function getStatusResponse(transactionID: string) {
   const [err, statusResponse] = await to(fetchStatusResponse(transactionID))
   ifError(err)
   const xpathRes = xpath(new DOMParser().parseFromString(statusResponse), xpathQuery)
-  const promises = xpathRes.map((res: any) => promisify(decrypt)(res.toString(), DECRYPT_OPTIONS))
+  const promises = xpathRes.map((res: any) => (promisify as any)(decrypt)(res.toString(), DECRYPT_OPTIONS))
   const [err1, attributes] = await to(Promise.all(promises))
   ifError(err1)
   const parsed = JSON.parse(xml2json(statusResponse, { compact: true }) as any)
