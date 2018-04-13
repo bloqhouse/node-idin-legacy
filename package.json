@@ -119,7 +119,6 @@
       "json"
     ],
     "testEnvironment": "node",
-    "mapCoverage": true,
     "coverageThreshold": {
       "global": {
         "statements": 100,
