@@ -1,6 +1,6 @@
 import { ifError } from 'assert'
 import to from 'await-to-ts'
-import { promisify } from 'es6-promisify'
+import * as promisify from 'es6-promisify'
 import idx from 'idx'
 import 'isomorphic-fetch'
 import { pd } from 'pretty-data'
